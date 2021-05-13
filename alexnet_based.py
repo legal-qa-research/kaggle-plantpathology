@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.optim as optim
 
 
-net_alexnet = models.alexnet(pretrained=True)
+net_alexnet = models.alexnet(pretrained=False)
 #
 # if torch.cuda.is_available():
 #     load_weights = torch.load(load_path_alexNet)
@@ -60,7 +60,7 @@ for name, param in net_alexnet.named_parameters():
 
 # Set Optimizer
 optimizer = optim.SGD([
-    {"params": params_to_update_1, "lr": 5e-4},
-    {"params": params_to_update_2, "lr": 5e-4},
+    {"params": params_to_update_1, "lr": 1e-3},
+    {"params": params_to_update_2, "lr": 1e-3},
     {"params": params_to_update_3, "lr": 1e-3}
 ], momentum=0.9)
