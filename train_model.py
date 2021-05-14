@@ -1,5 +1,5 @@
 import torch
-from tqdm.notebook import tqdm
+from tqdm import tqdm
 
 
 def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
@@ -31,7 +31,10 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
             epoch_corrects = 0
             # if (epoch == 0) and (phase == "train"):
             # continue
-            for inputs, labels, _ in tqdm(dataloaders_dict[phase]):
+
+            pbar = tqdm(total=len(dataloaders_dict[phase]))
+
+            for inputs, labels, _ in dataloaders_dict[phase]:
                 inputs = inputs.to(device)
                 labels = labels.to(device)
                 optimizer.zero_grad()
@@ -44,6 +47,7 @@ def train_model(net, dataloaders_dict, criterion, optimizer, num_epochs):
                         optimizer.step()
                     epoch_loss += loss.item() * inputs.size(0)
                     epoch_corrects += torch.sum(preds == labels.data)
+                pbar.update(1)
             epoch_loss = epoch_loss / len(dataloaders_dict[phase].dataset)
             epoch_acc = epoch_corrects.double() / len(dataloaders_dict[phase].dataset)
             print(f"{phase} Loss: {epoch_loss:.4f} Acc: {epoch_acc:.4f}")
