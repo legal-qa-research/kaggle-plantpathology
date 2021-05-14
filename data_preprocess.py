@@ -29,7 +29,7 @@ def make_datapath_list(phase="train", val_size=0.25):
     else:
         print(f"{phase} not in path")
     target_path = osp.join(TRAIN_IMAGE_PATH, '*.jpg') if phase in ['train', 'val'] \
-        else osp.join(TEST_IMAGE_PATH, '*.{jpg,JPEG}')
+        else osp.join(TEST_IMAGE_PATH, '*.JPEG')
 
     path_list = []
 
